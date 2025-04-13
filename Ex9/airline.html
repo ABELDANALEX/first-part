@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Reservation System</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 50%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        th { background-color: lightgray; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Airline Seat Reservation System</h2>
+    <p>Press 1 for First Class (Seats 1-5) or 2 for Economy (Seats 6-10)</p>
+    <input type="text" id="name" placeholder="Enter Passenger Name">
+    <input type="number" id="section" min="1" max="2" placeholder="Enter 1 or 2">
+    <button onclick="assignSeat()">Book Seat</button>
+
+    <h3>Boarding Passes</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Seat Number</th>
+            <th>Class</th>
+        </tr>
+        <tbody id="boardingPasses"></tbody>
+    </table>
+
+    <script>
+        let seats = new Array(10).fill(0); 
+
+        function assignSeat() {
+            let name = document.getElementById("name").value;
+            let section = parseInt(document.getElementById("section").value);
+            if (!name || (section !== 1 && section !== 2)) {
+                alert("Please enter a valid name and choose 1 or 2.");
+                return;
+            }
+
+            let seatNumber = -1;
+            if (section === 1) {
+                seatNumber = findSeat(0, 5); 
+                if (seatNumber === -1) seatNumber = findSeat(5, 10); 
+            } else if (section === 2) {
+                seatNumber = findSeat(5, 10); 
+                if (seatNumber === -1) seatNumber = findSeat(0, 5); 
+            }
+
+            if (seatNumber !== -1) {
+                seats[seatNumber] = 1; 
+                let classType = seatNumber < 5 ? "First Class" : "Economy";
+                document.getElementById("boardingPasses").innerHTML += 
+                    `<tr><td>${name}</td><td>${seatNumber + 1}</td><td>${classType}</td></tr>`;
+                alert(`Seat booked: ${name}, Seat ${seatNumber + 1}, ${classType}`);
+            } else {
+                alert("Sorry, the flight is fully booked.");
+            }
+        }
+
+        function findSeat(start, end) {
+            for (let i = start; i < end; i++) {
+                if (seats[i] === 0) return i;
+            }
+            return -1; 
+        }
+    </script>
+
+</body>
+</html>

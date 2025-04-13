@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Selection Methods - 23BCE1335</title>
+</head>
+<body>
+    <h1 id="title">Original Title</h1>
+    
+    <input type="text" name="username" placeholder="Enter username">
+    
+    <h3>Select Gender:</h3>
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female
+    
+    <h3>Paragraphs:</h3>
+    <p class="info">Info paragraph 1</p>
+    <p class="info">Info paragraph 2</p>
+    <p>Regular paragraph</p>
+    
+    <h3>List of Items:</h3>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+    
+    <h3>Input Fields:</h3>
+    <input type="text" class="input-field" placeholder="Field 1">
+    <input type="text" class="input-field" placeholder="Field 2">
+    
+    <h3>Select Your Hobbies:</h3>
+    <input type="checkbox" class="hobby" value="Reading"> Reading
+    <input type="checkbox" class="hobby" value="Gaming"> Gaming
+    <input type="checkbox" class="hobby" value="Traveling"> Traveling
+    
+    <script>
+        document.getElementById("title").innerText = "Updated Title";
+
+     
+        const usernameField = document.getElementsByName("username")[0];
+        usernameField.value = "John Doe";
+        console.log("Username field updated to:", usernameField.value);
+
+        const genderRadios = document.getElementsByName("gender");
+        genderRadios.forEach(radio => console.log("Gender option available:", radio.value));
+        for (let radio of genderRadios) {
+            if (radio.checked) {
+                console.log("Selected Gender:", radio.value);
+            }
+        }
+
+        const paragraphs = document.getElementsByTagName("p");
+        console.log("Total <p> elements:", paragraphs.length);
+
+        const listItems = document.getElementsByTagName("li");
+        listItems.forEach(li => console.log("List Item:", li.textContent));
+
+        const inputFields = document.getElementsByClassName("input-field");
+        for (let field of inputFields) {
+            field.style.backgroundColor = "lightblue";
+            console.log("Updated background for input field:", field.placeholder);
+        }
+
+        const firstInfoPara = document.querySelector(".info");
+        firstInfoPara.innerText = "This is the first info paragraph";
+        console.log("Updated first info paragraph:", firstInfoPara.innerText);
+
+        const firstGenderRadio = document.querySelector("input[name='gender']");
+        if (firstGenderRadio) {
+            firstGenderRadio.checked = true;
+            console.log("First gender radio button checked:", firstGenderRadio.value);
+        }
+
+        document.querySelectorAll(".info").forEach(p => console.log("Info Paragraph:", p.textContent));
+
+        document.querySelectorAll(".hobby").forEach(checkbox => {
+            checkbox.checked = true;
+            console.log("Checked Hobby:", checkbox.value);
+        });
+    </script>
+</body>
+</html>

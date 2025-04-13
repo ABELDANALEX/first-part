@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>23BCE1335</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      position: relative;
+    }
+
+    #timer {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      border: 1px solid #000;
+      padding: 5px 10px;
+      background-color: #f0f0f0;
+    }
+
+    #form-container {
+      border: 1px solid #ccc;
+      padding: 20px;
+      max-width: 500px;
+    }
+
+    .mandatory {
+      color: red;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: inline-block;
+      width: 120px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+      width: 200px;
+      padding: 5px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-left: 125px;
+    }
+  </style>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      document.getElementById("timer").textContent = 
+        `Time: ${hours}:${minutes}:${seconds}`;
+    }
+
+    function printForm() {
+      window.print();
+    }
+
+    function validateForm() {
+      const errorElements = document.getElementsByClassName("error");
+      while (errorElements.length > 0) {
+        errorElements[0].parentNode.removeChild(errorElements[0]);
+      }
+
+      const nameField = document.getElementById("name");
+      const addressField = document.getElementById("address");
+      const zipField = document.getElementById("zip");
+      const countryField = document.getElementById("country");
+      const genderFields = document.getElementsByName("gender");
+      const prefFields = document.getElementsByName("preferences");
+      const phoneField = document.getElementById("phone");
+      const emailField = document.getElementById("email");
+      const passwordField = document.getElementById("password");
+      const verifyPasswordField = document.getElementById("verifyPassword");
+      const panField = document.getElementById("pan");
+
+      function showError(element, message) {
+        const error = document.createElement("div");
+        error.className = "error";
+        error.textContent = message;
+        element.parentNode.appendChild(error);
+        element.focus();
+      }
+
+      if (nameField.value.trim() === "") {
+        showError(nameField, "Name is required.");
+        return false;
+      }
+      if (addressField.value.trim() === "") {
+        showError(addressField, "Address is required.");
+        return false;
+      }
+      if (zipField.value.trim() === "") {
+        showError(zipField, "Zip Code is required.");
+        return false;
+      }
+      let genderSelected = false;
+      for (let i = 0; i < genderFields.length; i++) {
+        if (genderFields[i].checked) {
+          genderSelected = true;
+          break;
+        }
+      }
+      if (!genderSelected) {
+        const genderContainer = document.getElementById("genderContainer");
+        const error = document.createElement("div");
+        error.className = "error";
+        error.textContent = "Gender is required.";
+        genderContainer.appendChild(error);
+        return false;
+      }
+      let prefSelected = false;
+      for (let i = 0; i < prefFields.length; i++) {
+        if (prefFields[i].checked) {
+          prefSelected = true;
+          break;
+        }
+      }
+      if (!prefSelected) {
+        const prefContainer = document.getElementById("prefContainer");
+        const error = document.createElement("div");
+        error.className = "error";
+        error.textContent = "At least one preference is required.";
+        prefContainer.appendChild(error);
+        return false;
+      }
+      if (phoneField.value.trim() === "") {
+        showError(phoneField, "Phone number is required.");
+        return false;
+      }
+      if (emailField.value.trim() === "") {
+        showError(emailField, "Email is required.");
+        return false;
+      }
+      if (passwordField.value.trim() === "") {
+        showError(passwordField, "Password is required.");
+        return false;
+      }
+      if (verifyPasswordField.value.trim() === "") {
+        showError(verifyPasswordField, "Verify Password is required.");
+        return false;
+      }
+
+      if (nameField.value.trim().length > 15) {
+        showError(nameField, "Name must not exceed 15 characters.");
+        return false;
+      }
+
+
+      const zipRegex = /^[0-9]{1,6}$/;
+      if (!zipRegex.test(zipField.value.trim())) {
+        showError(zipField, "Zip Code must be numeric and up to 6 digits.");
+        return false;
+      }
+
+      const phoneRegex = /^[0-9]{1,10}$/;
+      if (!phoneRegex.test(phoneField.value.trim())) {
+        showError(phoneField, "Phone number must be numeric and up to 10 digits.");
+        return false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailField.value.trim())) {
+        showError(emailField, "Invalid email format.");
+        return false;
+      }
+
+  
+      const passwordValue = passwordField.value.trim();
+      const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,15}$/;
+      if (!passRegex.test(passwordValue)) {
+        showError(passwordField, 
+          "Password must have 1 letter, 1 digit, 1 special character, and be 8-15 chars long."
+        );
+        return false;
+      }
+      if (passwordField.value !== verifyPasswordField.value) {
+        showError(verifyPasswordField, "Passwords do not match.");
+        return false;
+      }
+
+      const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+      if (panField.value.trim() !== "" && !panRegex.test(panField.value.trim().toUpperCase())) {
+        showError(panField, "Invalid PAN number. Must be 10 characters (e.g., AAAAA9999A).");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+
+<body onload="updateTime(); setInterval(updateTime, 1000)">
+
+  <div id="timer"></div>
+
+  <div id="form-container">
+    <h3>Test JavaScript Form Validation</h3>
+
+    <form name="myForm" onsubmit="return validateForm()">
+
+      <div class="form-group">
+        <label for="name">Name<span class="mandatory">*</span></label>
+        <input type="text" id="name" name="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address<span class="mandatory">*</span></label>
+        <textarea id="address" name="address" rows="3" cols="20"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="zip">Zip Code<span class="mandatory">*</span></label>
+        <input type="text" id="zip" name="zip" />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country<span class="mandatory">*</span></label>
+        <select id="country" name="country">
+          <option value="">-- Select --</option>
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="Australia">Australia</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="genderContainer">
+        <label>Gender<span class="mandatory">*</span></label>
+        <input type="radio" id="male" name="gender" value="Male" /> Male
+        <input type="radio" id="female" name="gender" value="Female" /> Female
+      </div>
+
+      <div class="form-group" id="prefContainer">
+        <label>Preferences<span class="mandatory">*</span></label>
+        <input type="checkbox" name="preferences" value="Red" /> Red
+        <input type="checkbox" name="preferences" value="Green" /> Green
+        <input type="checkbox" name="preferences" value="Blue" /> Blue
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone<span class="mandatory">*</span></label>
+        <input type="text" id="phone" name="phone" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email<span class="mandatory">*</span></label>
+        <input type="email" id="email" name="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password<span class="mandatory">*</span></label>
+        <input type="password" id="password" name="password" />
+      </div>
+
+      <div class="form-group">
+        <label for="verifyPassword">Verify Password<span class="mandatory">*</span></label>
+        <input type="password" id="verifyPassword" name="verifyPassword" />
+      </div>
+
+      <div class="form-group">
+        <label for="pan">PAN No</label>
+        <input type="text" id="pan" name="pan" placeholder="AAAAA9999A" />
+      </div>
+
+      <div class="buttons">
+        <input type="submit" value="SEND" />
+        <input type="reset" value="CLEAR" />
+        <button type="button" onclick="printForm()">PRINT</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

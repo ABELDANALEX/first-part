@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!--Get feedback of a product using HTML slider control (three sliders) and add the total
+value using output element and oninput form attribute-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating - 23BCE1335</title>
+</head>
+<h2 style="color:darkgreen">Hi. Welcome to our website. Please enter feedback of 3 products</h2>
+<form oninput="x.value=parseInt(a.value)/3+parseInt(b.value)/3+parseInt(c.value)/3">
+    <font color="#d1af06">Feedback1</font> : <b>1<input type="range" id="a" value="5" min="1" max="5" style="accent-color:gold">5</b><br><br>
+    <font color="#8c2807">Feedback2</font> : <b>1<input type="range" id="b" value="5" min="1" max="5" style="accent-color:rgb(129, 45, 6)">5</b><br><br>
+    <font color="#074c8c">Feedback3</font> : <b>1<input type="range" id="c" value="5" min="1" max="5" style="accent-color:rgb(3, 85, 179)">5</b><br>
+
+    <h3>Final Feedback: <font color="#23cbe4"><output id="x"></output></font></h3>
+</form>
+
+</body>
+</html>

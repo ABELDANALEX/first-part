@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23BCE1335</title>
+    <script>
+
+        window.onload=function(){
+            table()
+            button()
+            textbox()
+            let list = input()
+            //let list = document.querySelector("#input ul")
+            document.getElementById("b").addEventListener("dblclick",function(){
+                if(document.getElementById("text").value.trim()==""){
+                    alert("please enter a value")
+                }
+                else{
+                    let mess = document.getElementById("text").value
+                    let l = document.createElement("li")
+                    l.innerText=mess
+                    list.appendChild(l)
+                    //document.getElementById("text").value = ""
+                }
+            })
+            keypress()
+        }
+
+        function table(){
+            let t1 = document.createElement("table")
+            t1.setAttribute("border","1")
+            for(let i=0;i<=2;i++){
+                let r = t1.insertRow(i)
+                for(let j=0;j<=2;j++){
+                    let c = r.insertCell(j)
+                    c.innerText=`R${i}C${j}`
+                }   
+            }
+            document.getElementById("table").appendChild(t1)
+        }
+        
+        function button(){
+            let b = document.createElement("button")
+            b.style.backgroundColor="red"
+            b.innerText="Press me"
+            document.getElementById("button").appendChild(b)
+            b.addEventListener("mouseover",function(){
+                this.style.backgroundColor="green"
+            })
+            b.addEventListener("mouseout",function(){
+                this.style.backgroundColor="red"
+            })
+        }
+       
+        function textbox(){
+            let t = document.createElement("input")
+            t.setAttribute("type","text")
+            t.style.backgroundColor="green"
+            document.getElementById("textbox").appendChild(t)
+
+            t.addEventListener("focus",function(){
+                t.style.backgroundColor="yellow"
+            })
+
+            t.addEventListener("blur",function(){
+                t.style.backgroundColor="green"
+            })
+
+            t.addEventListener("change",function(){
+                let p = document.createElement("p")
+                p.innerHTML = "<font style='color:green'>Welcome</font>"
+                document.getElementById("textbox").appendChild(p);
+                setTimeout(function(){
+                    p.remove()},5000)
+            })
+        }
+
+        function input(){
+            let list1 = document.createElement("ul")
+            document.getElementById("input").appendChild(list1)
+            return list1
+            
+
+        }
+
+        function keypress(){
+            let dummy = document.createElement("input")
+            dummy.setAttribute("type","text")
+            document.getElementById("keypress").appendChild(dummy)
+            let count = document.createElement("input")
+            count.setAttribute("type","number")
+            count.value=0
+            document.getElementById("keypress").appendChild(count)
+            
+            dummy.addEventListener("keypress",function(){
+                    count.value = parseInt(count.value)+1
+                })
+            
+
+        }
+    </script>
+</head>
+<body>
+    <div class="Container" id="table"></div><br>
+    <div class="Container" id="button">
+        <!-- <button style="background-color: red;">Press me</button> -->
+    </div><br>
+    <div class="Container" id="textbox">
+    </div>
+    <div class="Container" id="input" >
+        <input type="text" id="text">
+        <input type="button" id="b" value = "Add Item">
+    </div>
+    <div class="Container" id="keypress"></div>
+</body>
+</html>

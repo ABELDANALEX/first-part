@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Order Form - 23BCE1335</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #808A6E;
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: white;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            background: #f9f9f9;
+        }
+        .product-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .product-container img {
+            width: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        button {
+            background-color: #D2A679;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #b08b5e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Grocery Order Form</h2>
+    <form id="orderForm">
+        <label>Customer Name:</label>
+        <input type="text" id="customerName" required>
+
+        <label>Phone Number:</label>
+        <input type="text" id="phoneNumber" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <h3>Products</h3>
+        <div class="product-container">
+            <input type="checkbox" class="product" value="Apple" data-price="10">
+            <img src="https://i.imgur.com/L5Cv0Ay.png" alt="Apple">
+            <span>Apple ($10/kg)</span>
+            <input type="number" min="1" class="quantity" disabled>
+        </div>
+        <div class="product-container">
+            <input type="checkbox" class="product" value="Banana" data-price="5">
+            <img src="https://i.imgur.com/kYFd5De.png" alt="Banana">
+            <span>Banana ($5/kg)</span>
+            <input type="number" min="1" class="quantity" disabled>
+        </div>
+        <div class="product-container">
+            <input type="checkbox" class="product" value="Avocado" data-price="7">
+            <img src="https://i.imgur.com/UxoyH7k.png" alt="Avocado">
+            <span>Avocado ($7/kg)</span>
+            <input type="number" min="1" class="quantity" disabled>
+        </div>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</div>
+
+<script>
+    document.querySelectorAll(".product").forEach((checkbox, index) => {
+        checkbox.addEventListener("change", function() {
+            let quantityInput = document.querySelectorAll(".quantity")[index];
+            quantityInput.disabled = !this.checked;
+        });
+    });
+
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let orderData = {
+            customerName: document.getElementById("customerName").value,
+            phoneNumber: document.getElementById("phoneNumber").value,
+            email: document.getElementById("email").value,
+            products: []
+        };
+
+        document.querySelectorAll(".product").forEach((checkbox, index) => {
+            if (checkbox.checked) {
+                let quantity = document.querySelectorAll(".quantity")[index].value;
+                if (quantity > 0) {
+                    orderData.products.push({
+                        name: checkbox.value,
+                        price: checkbox.getAttribute("data-price"),
+                        quantity: quantity
+                    });
+                }
+            }
+        });
+
+        localStorage.setItem("orderData", JSON.stringify(orderData));
+        window.location.href = "receipt.html";
+    });
+</script>
+
+</body>
+</html>

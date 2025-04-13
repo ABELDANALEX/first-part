@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23BCE1335</title>
+    <script>
+        window.onload=function(){
+            stopwatch()
+            dob()
+            counter()
+        }
+        function timearr(value){
+            let arr = new Array(3)
+            arr[0] = parseInt(value/3600)
+            arr[1] = parseInt((value%3600)/60)
+            arr[2] = parseInt(value%60)
+            return arr
+        }
+        function stopwatch(){
+            let time=0
+            let start = document.createElement("button")
+            let stop = document.createElement("button")
+            let reset = document.createElement("button")
+            start.style.backgroundColor="green"
+            stop.style.backgroundColor="red"
+            reset.style.backgroundColor="yellow"
+            start.innerText = "START"
+            stop.innerText = "STOP"
+            reset.innerText = "RESET"
+            document.getElementById("timer").appendChild(start)
+            document.getElementById("timer").appendChild(stop)
+            document.getElementById("timer").appendChild(reset)
+            let hours = document.createElement("input")
+            let mins = document.createElement("input")
+            let secs = document.createElement("input")
+            hours.type="number"
+            mins.type="number"
+            secs.type="number"
+            hours.value=0
+            mins.value=0
+            secs.value=0
+            br=document.createElement("br")
+            document.getElementById("timer").appendChild(br)
+            document.getElementById("timer").appendChild(br)
+            document.getElementById("timer").appendChild(hours)
+            document.getElementById("timer").appendChild(mins)
+            document.getElementById("timer").appendChild(secs)
+            let id;
+            start.addEventListener("click",function(){
+                id = setInterval(function(){
+                    time++;
+                    let newarr = timearr(time)
+                    hours.value=newarr[0]
+                    mins.value=newarr[1]
+                    secs.value=newarr[2]
+                },1000)
+            })
+            stop.addEventListener("click",function(){
+                clearInterval(id)
+            })
+            reset.addEventListener("click",function(){
+                clearInterval(id)
+                time=0
+                hours.value=0
+                mins.value=0
+                secs.value=0
+            })
+
+
+        }
+
+        function dob(){
+            let dob=document.createElement("input")
+            dob.type="date"
+            dob.value="2005-01-04"
+            document.getElementById("textbox").appendChild(dob)
+            let age=document.createElement("input")
+            age.type="text"
+            age.value="(age)"
+            age.readOnly="true"
+            document.getElementById("textbox").appendChild(age)
+
+            age.addEventListener("mouseover",function(){
+                let d = new Date(dob.value)
+                let current = new Date()
+                let years = current.getFullYear() - d.getFullYear()
+                if (current.getMonth() < d.getMonth() || (current.getMonth() == d.getMonth() && current.getDate() < d.getDate())){
+                    years--
+                }
+                age.value = `${years}`
+                
+            })
+
+        }
+
+        function counter(){
+            let textar=document.createElement("input")
+            textar.type="text"
+            let counter=document.createElement("input")
+            counter.type="number"
+            counter.value=0
+            document.getElementById("counter").appendChild(textar)
+            document.getElementById("counter").appendChild(counter)
+            textar.addEventListener("input", function(){
+                counter.value= textar.value.length
+            })
+        }
+
+    </script>
+</head>
+<body>
+    <div id="timer"></div><br>
+    <div id="textbox"></div><br>
+    <div id="counter"></div>
+</body>
+</html>

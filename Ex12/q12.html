@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>23BCE1335</title>
+  <style>
+    body {
+      margin: 20px;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="500" 
+  style="border:1px solid #000; background-color: #fff;">
+</canvas>
+
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let boatX = 400;             
+  let boatY = 300;             
+  let boatOffset = 0;          
+  const amplitude = 5;         
+  const speed = 0.02;          
+ 
+  function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.ellipse(400, 300, 100, 50, 0, 0, 2 * Math.PI);
+    ctx.fillStyle = "#ADD8E6"; 
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(550, 320, 15, 0, 2 * Math.PI);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(565, 315, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(575, 315);
+    ctx.lineTo(580, 312);
+    ctx.lineTo(580, 318);
+    ctx.closePath();
+    ctx.fillStyle = "orange";
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(700, 80, 40, 0, 2 * Math.PI);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.stroke();
+
+    for (let i = 0; i < 12; i++) {
+      let angle = (2 * Math.PI / 12) * i;
+      let startX = 700 + Math.cos(angle) * 40;
+      let startY = 80 + Math.sin(angle) * 40;
+      let endX   = 700 + Math.cos(angle) * 55;
+      let endY   = 80 + Math.sin(angle) * 55;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = "yellow";
+      ctx.stroke();
+    }
+
+    
+    ctx.fillStyle = "#FFA500"; 
+    ctx.fillRect(100, 200, 100, 100);
+    ctx.strokeRect(100, 200, 100, 100);
+
+    ctx.beginPath();
+    ctx.moveTo(100, 200);
+    ctx.lineTo(150, 150);
+    ctx.lineTo(200, 200);
+    ctx.closePath();
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.stroke();
+
+    
+    ctx.beginPath();
+    ctx.moveTo(600, 320);
+    ctx.lineTo(600, 280);
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(595, 300, 5, 0, Math.PI, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(605, 300, 5, 0, Math.PI, true);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.ellipse(600, 270, 10, 15, 0, 0, 2 * Math.PI);
+    ctx.fillStyle = "pink";
+    ctx.fill();
+    ctx.stroke();
+
+    let stonePositions = [
+      {x: 130, y: 310},
+      {x: 150, y: 320},
+      {x: 170, y: 315}
+    ];
+    ctx.fillStyle = "gray";
+    for (let pos of stonePositions) {
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 8, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    drawBoat(boatX, boatY);
+  }
+
+  function drawBoat(x, y) {
+    ctx.save();            
+    ctx.translate(x, y);  
+    ctx.beginPath();
+    ctx.moveTo(-30, 0);
+    ctx.quadraticCurveTo(0, -10, 30, 0);
+    ctx.quadraticCurveTo(25, 10, -25, 10);
+    ctx.closePath();
+
+    ctx.fillStyle = "#8B4513"; 
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();        
+  }
+
+
+  function animate() {
+    boatOffset += speed;
+    boatY = 300 + Math.sin(boatOffset) * amplitude;
+
+    drawScene();
+    requestAnimationFrame(animate);
+  }
+
+  drawScene();
+  animate();
+</script>
+
+</body>
+</html>
